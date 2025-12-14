@@ -1,0 +1,11 @@
+ProductID,ProductName,Category,Subcategory,Brand,CostPrice
+1,Product_1,Electronics,Furniture,BrandA,286
+2,Product_2,Clothing,Furniture,BrandB,134
+3,Product_3,Home,Laptop,BrandB,355
+4,Product_4,Clothing,Mobile,BrandC,244
+5,Product_5,Home,Laptop,BrandB,113
+6,Product_6,Home,Laptop,BrandC,406
+7,Product_7,Electronics,Shirt,BrandB,464
+8,Product_8,Electronics,Shirt,BrandC,424
+9,Product_9,Home,Laptop,BrandC,219
+10,Product_10,Electronics,Laptop,BrandB,359

@@ -1,0 +1,63 @@
+import pandas as pd
+import numpy as np
+import random
+from datetime import datetime, timedelta
+
+# --- Products ---
+products = pd.DataFrame({
+    "ProductID": range(1, 11),
+    "ProductName": [f"Product_{i}" for i in range(1, 11)],
+    "Category": np.random.choice(["Electronics", "Clothing", "Home"], 10),
+    "Subcategory": np.random.choice(["Mobile", "Laptop", "Shirt", "Furniture"], 10),
+    "Brand": np.random.choice(["BrandA", "BrandB", "BrandC"], 10),
+    "CostPrice": np.random.randint(100, 500, 10)
+})
+products.to_csv("Products.csv", index=False)
+
+# --- Customers ---
+customers = pd.DataFrame({
+    "CustomerID": range(1, 21),
+    "Name": [f"Customer_{i}" for i in range(1, 21)],
+    "City": np.random.choice(["Bengaluru", "Mumbai", "Delhi"], 20),
+    "State": np.random.choice(["KA", "MH", "DL"], 20),
+    "Country": "India",
+    "Segment": np.random.choice(["Retail", "Wholesale"], 20)
+})
+customers.to_csv("Customers.csv", index=False)
+
+# --- Orders ---
+dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
+orders = pd.DataFrame({
+    "OrderID": range(1, 51),
+    "CustomerID": np.random.choice(customers["CustomerID"], 50),
+    "OrderDate": np.random.choice(dates, 50),
+    "OrderStatus": np.random.choice(["Completed", "Cancelled", "Returned"], 50),
+    "PaymentMethod": np.random.choice(["Card", "UPI", "COD"], 50),
+    "ShippingCost": np.random.randint(20, 100, 50)
+})
+orders.to_csv("Orders.csv", index=False)
+
+# --- OrderItems ---
+order_items = []
+for oid in orders["OrderID"]:
+    for _ in range(random.randint(1, 3)):  # 1–3 items per order
+        pid = random.choice(products["ProductID"])
+        qty = random.randint(1, 5)
+        unit_price = random.randint(200, 1000)
+        discount = random.randint(0, 50)
+        tax = random.randint(10, 100)
+        order_items.append([len(order_items)+1, oid, pid, qty, unit_price, discount, tax])
+
+order_items = pd.DataFrame(order_items, columns=["OrderItemID","OrderID","ProductID","Quantity","UnitPrice","DiscountAmount","TaxAmount"])
+order_items.to_csv("OrderItems.csv", index=False)
+
+# --- Calendar ---
+calendar = pd.DataFrame({"Date": dates})
+calendar["Year"] = calendar["Date"].dt.year
+calendar["Quarter"] = calendar["Date"].dt.quarter
+calendar["Month"] = calendar["Date"].dt.month
+calendar["MonthName"] = calendar["Date"].dt.strftime("%B")
+calendar["Week"] = calendar["Date"].dt.isocalendar().week
+calendar["Day"] = calendar["Date"].dt.day
+calendar["IsWeekend"] = calendar["Date"].dt.weekday >= 5
+calendar.to_csv("Calendar.csv", index=False)
